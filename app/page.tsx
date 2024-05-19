@@ -2,6 +2,24 @@
 
 import { useState } from "react";
 
+function FilterableCarsTable({ cars }) {
+  const [filterText, setFilterText] = useState('');
+  const [inStockOnly, setInStockOnly] = useState(false);
+  return (
+    <div className="p-10">
+      <SearchBar 
+        filterText={filterText}
+        inStockOnly={inStockOnly}
+        onFilterTextChange={setFilterText}
+        onInStockOnlyChange={setInStockOnly} />
+      <CarsTable 
+        cars={cars}
+        filterText={filterText}
+        inStockOnly={inStockOnly} />
+    </div>
+  );
+}
+
 function CarsCategoryRow({ category }) {
   return (
     <tr>
@@ -24,11 +42,21 @@ function CarsRow({ car }) {
     );
 }
 
-function CarsTable({ cars }) {
+function CarsTable({ cars, filterText, inStockOnly }) {
   const rows = [];
   let lastCategory = null;
 
   cars.forEach((car) => {
+    if (
+      car.name.toLowerCase().indexOf(
+        filterText.toLowerCase()
+      ) === -1
+    ) {
+      return;
+    }
+    if (inStockOnly && !car.stocked) {
+      return;
+    }
     if (car.category !== lastCategory) {
       rows.push(<CarsCategoryRow category={car.category} key={car.category} />);
     }
@@ -49,35 +77,29 @@ function CarsTable({ cars }) {
   );
 }
 
-function SearchBar({ filterText, inStockOnly }) {
+function SearchBar({ 
+  filterText, 
+  inStockOnly, 
+  onFilterTextChange,
+  onInStockOnlyChange
+}) {
   return (
     <form action="./">
       <input 
         type="text" 
         value={filterText}
-        placeholder="Search cars..." />
+        placeholder="Search cars..."
+        onChange={(e) => onFilterTextChange(e.target.value)} />
       <label htmlFor="search">
-        <input type="checkbox" /> Only show cars in stock
+        <input 
+          type="checkbox"
+          checked={inStockOnly}
+          onChange={(e) => onInStockOnlyChange(e.target.checked)} /> Only show cars in stock
       </label>
     </form>
   );
 }
 
-function FilterableCarsTable({ cars }) {
-  const [filterText, setFilterText] = useState('');
-  const [inStockOnly, setInStockOnly] = useState(false);
-  return (
-    <div className="p-10">
-      <SearchBar 
-        filterText={filterText}
-        inStockOnly={inStockOnly} />
-      <CarsTable 
-        cars={cars}
-        filterText={filterText}
-        inStockOnly={inStockOnly} />
-    </div>
-  );
-}
 
 const CARS = [
   {
