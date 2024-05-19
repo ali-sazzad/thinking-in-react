@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from "react";
+
 function CarsCategoryRow({ category }) {
   return (
     <tr>
@@ -45,10 +49,13 @@ function CarsTable({ cars }) {
   );
 }
 
-function SearchBar() {
+function SearchBar({ filterText, inStockOnly }) {
   return (
     <form action="./">
-      <input type="text" placeholder="Search cars..." />
+      <input 
+        type="text" 
+        value={filterText}
+        placeholder="Search cars..." />
       <label htmlFor="search">
         <input type="checkbox" /> Only show cars in stock
       </label>
@@ -57,10 +64,17 @@ function SearchBar() {
 }
 
 function FilterableCarsTable({ cars }) {
+  const [filterText, setFilterText] = useState('');
+  const [inStockOnly, setInStockOnly] = useState(false);
   return (
     <div className="p-10">
-      <SearchBar />
-      <CarsTable cars={cars} />
+      <SearchBar 
+        filterText={filterText}
+        inStockOnly={inStockOnly} />
+      <CarsTable 
+        cars={cars}
+        filterText={filterText}
+        inStockOnly={inStockOnly} />
     </div>
   );
 }
