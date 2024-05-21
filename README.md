@@ -2,7 +2,7 @@
 <p>Welcome to the "Thinking in React" repository! This project demonstrates the thought process of building a searchable product data table using React structured with Next.js.</p>
 
 <h2>Introduction</h2>
-<p>"Thinking in React" is inspired by the React documentation's Thinking in React section. This project showcases how to build a searchable product data table using React, emphasizing the step-by-step thought process involved in designing and implementing such a feature.</p>
+<p>"Thinking in React" is inspired by the React documentation's <a href="https://react.dev/learn/thinking-in-react">Thinking in React</a> section. This project showcases how to build a searchable product data table using React, emphasizing the step-by-step thought process involved in designing and implementing such a feature.</p>
 
 <h2>Features</h2>
 <ul>
